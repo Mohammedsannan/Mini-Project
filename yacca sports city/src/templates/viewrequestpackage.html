@@ -1,0 +1,43 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+{% extends "admin_home1.html" %}
+{% block body %}
+
+<body>
+<H2>VIEW REQUEST PACKAGE</H2>
+<form id="form1" name="form1" method="post" action="">
+  <table width="312" border="1" class="table table-striped table-hover">
+    <tr>
+      <th width="24" scope="col">Sl no. </th>
+      <th width="36" scope="col">User name </th>
+      <th width="33" scope="col">From</th>
+      <th width="53" scope="col">To</th>
+      <th width="34" scope="col">Slot</th>
+      <th width="63" scope="col">Facility name </th>
+      <th width="23" scope="col">&nbsp;</th>
+    </tr>
+    {% for i in val %}
+    <tr>
+      <td>{{loop.index}}</td>
+      <td>{{i['fullname']}}</td>
+      <td>{{i['from']}}</td>
+      <td>{{i['to']}}</td>
+      <td>{{i['slot']}}</td>
+      <td>{{i['fname']}}</td>
+      <td><label><a href="accept_requestd_packge?id={{ i['r_id'] }}">Accept<br /></a></label>
+
+        <a href="reject_requestd_packge?id={{ i['r_id'] }}">Reject</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <label></label>
+</form>
+<label></label>
+</body>
+<!--</html>-->
+{% endblock %}

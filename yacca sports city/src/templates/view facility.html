@@ -1,0 +1,33 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+{% extends "user_home1.html" %}
+{% block body %}
+<body>
+<form id="form1" name="form1" method="post" action="">
+  <h2>AVAILABLE FACILITIES</h2>
+  <table width="294" border="1" class="table table-striped table-hover">
+    <tr>
+      <th width="41" scope="row">sl no. </th>
+      <td width="88">Facility name </td>
+      <td width="36">Photo</td>
+      <td width="70">Description</td>
+      <td width="37">Price</td>
+    </tr>
+    {% for i in val %}
+    <tr>
+      <td>{{loop.index}}</td>
+      <td>{{i['fname']}}</td>
+      <td>{{i['description']}}</td>
+      <td><img src="static/facility/{{i['image']}}"height="100" width="100"></td>
+       <td>{{i['price']}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</form>
+</body>
+<!--</html>-->
+{% endblock %}

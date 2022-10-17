@@ -1,0 +1,140 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+
+{% extends "admin_home1.html" %}
+{% block body %}
+
+<body>
+<h2>OFFLINE USERS BOOKING</h2>
+<form id="form1" name="form1" method="post" action="admin_slot_management_post">
+  <table width="200" border="1" class="table table-striped table-hover">
+    <tr>
+      <th scope="col">Facility </th>
+      <th scope="col"><label>
+        <select name="select" id="select">
+
+          {% for i in val %}
+           <option value="{{i['f_id']}}">{{i['fname']}}</option>
+          {% endfor %}
+        </select>
+
+      </label></th>
+    </tr>
+    <tr>
+      <td>Booking Date</td>
+      <td><label>
+       <input type="date" name="boodkingdate" id="boodkingdate" min="{{d}}" required>
+      </label></td>
+    </tr>
+    <tr>
+      <td>Slot</td>
+      <td>
+
+         <select name="select2" id="select2" required>
+                  <option>Select</option>
+           {% for i in s %}
+           <option>{{i}}</option>
+           {% endfor %}
+                  </select>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><label>
+        <input type="submit" name="Submit" value="BOOK" class="btn btn-primary" />
+      </label></td>
+    </tr>
+  </table>
+
+
+  <H3>VIEW BOOKED DETAILS</H3>
+
+  <table width="309" border="1" class="table table-striped table-hover">
+    <tr>
+      <th width="24" scope="col">Sl no.</th>
+      <th width="53" scope="col">Facility name </th>
+      <th width="36" scope="col"><p>Date</p></th>
+      <th width="26" scope="col">Slot</th>
+      <th width="83" scope="col"></th>
+    </tr>
+
+    {% if status=="ok" %}
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp</td>
+      <!--<td>&nbsp;</td>-->
+    </tr>
+
+    {% else %}
+
+{% for i in val2 %}
+    <tr>
+      <td>&nbsp;{{ loop.index }}</td>
+      <td>{{ i['fname'] }}&nbsp;</td>
+      <td>&nbsp;{{ i['date'] }}</td>
+      <td>{{ i['s_id'] }}&nbsp;</td>
+      <td>&nbsp;<a href="cancel_admin_bookings?id={{ i['b_id'] }}">Cancel </a></td>
+      <!--<td>&nbsp;</td>-->
+    </tr>
+
+    {% endfor %}
+
+    {% endif %}
+
+  </table>
+
+
+</form>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+
+$(document).ready(function(){
+
+
+    $("#boodkingdate").change(function() {
+
+        if ($(this).val() != 'default') {
+
+            var br = $('#boodkingdate').val();
+            var value = $('#select').val();
+
+
+            $.ajax({
+                type: 'POST',
+                url: "/user_bookingcheck",
+                data: { date: br,f:value },
+
+                success: function(response) {
+                var opt = '<option value="">Select</option>';
+
+    for (var i=0, l=response.length; i<l; i++)
+    {
+        opt+='<option value="'+response[i]+'">'+response[i]+'</option>';
+
+}
+
+ $('select#select2').html('').prop('disabled',false)
+
+    $('select#select2').empty();
+    $('select#select2').append(opt);
+                }
+            });
+        }
+        else {
+            $('select#model').html('').prop('disabled',true);
+        }
+    });
+});
+</script>
+</body>
+<!--</html>-->
+{% endblock %}
